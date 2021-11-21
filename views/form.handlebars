@@ -1,0 +1,80 @@
+<style>
+        .form {
+                margin: 0 auto;
+                width: 60%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                padding-top:5%;
+        }
+        input {
+                padding:10px;
+        }
+        form > div {
+                display: flex;
+                flex-direction: column;
+        }
+
+        
+</style>
+<div class='form'>
+        <h2>User Details</h2>
+   <form id="myform" >
+        <div>
+        <label>Firstname </label>
+        <input type="text" name="firstname"/>
+        <br><br>
+        <label>Lastname : </label>
+        <input type="text" name="lastname"/>
+        <br><br>
+        <label>Introduction : </label>
+        <textarea rows=4 cols=17 name="intro"> </textarea>
+        <br><br>
+        <label>Email : </label>
+        </div>
+        <div>
+        <input type="email" name="email"/>
+        <br><br>
+        <label>Phone : </label>
+        <input type="number" name="phone"/>
+        <br><br>
+        <label>Experience : </label>
+        <textarea rows=4 cols=17 name="experience"></textarea>
+        <br><br>
+        <label>Achievements : </label>
+        <textarea rows=4 cols=17 name="achievements"></textarea>
+        <br><br><br>
+        <input type="submit"></input>
+        </div>
+   </form>
+</div>
+
+<script>
+
+        myform.onsubmit = async (e) => {
+        e.preventDefault();
+        let parms = new FormData(myform);
+        fetch('http://localhost:3000/create', {
+                method: 'POST',
+                headers: {
+                'Content-Type': 'application/json',
+                },
+                body:JSON.stringify({
+                        firstname:parms.get("firstname"),
+                        lastname:parms.get("lastname"),
+                        introduction:parms.get("intro"),
+                        email:parms.get("email"),
+                        phone:parms.get("phone"),
+                        achievements:parms.get("achievements"),
+                        experience:parms.get("experience"),
+                })
+        })
+           .then(data => {
+                alert("Entry saved")
+            })
+           .catch(error => {
+                alert("Entry not saved")
+           })  
+        };
+    
+</script>
